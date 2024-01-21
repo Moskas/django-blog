@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.urls import reverse
 
 
 class Profile(models.Model):
@@ -37,3 +38,9 @@ class Post(models.Model):
 
     author = models.ForeignKey(Profile, on_delete=models.PROTECT)
     tags = models.ManyToManyField(Tag, blank=True)
+
+    def __str__(self):
+        return self.title
+
+    def get_absolute_url(self):
+        return reverse("tutorial_detail", kwargs={"slug": self.slug})
