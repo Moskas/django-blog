@@ -29,6 +29,7 @@ class Post(models.Model):
     title = models.CharField(max_length=255, unique=True)
     subtitle = models.CharField(max_length=255, blank=True)
     slug = models.SlugField(max_length=255, unique=True)
+    short_description = models.TextField()
     body = models.TextField()
     meta_description = models.CharField(max_length=150, blank=True)
     date_created = models.DateTimeField(auto_now_add=True)

@@ -24,7 +24,7 @@ from blog.feeds import RssTutorialsFeeds
 from blog.views import TutorialListView, TutorialDetailView
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
+    path("admin", admin.site.urls),
     path("graphql", csrf_exempt(GraphQLView.as_view(graphiql=True))),
     path("feed", RssTutorialsFeeds(), name="tutorial_feed"),
     path("<slug:slug>", TutorialDetailView.as_view(), name="tutorial_detail"),

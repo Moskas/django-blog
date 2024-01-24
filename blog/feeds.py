@@ -16,7 +16,7 @@ class RssTutorialsFeeds(Feed):
         return item.title
 
     def item_description(self, item):
-        return truncatewords(item.body, 30)
+        return item.body
 
     def item_lastupdated(self, item):
         return item.publish_date
