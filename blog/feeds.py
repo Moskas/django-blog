@@ -5,9 +5,9 @@ from blog.models import Post
 
 
 class RssTutorialsFeeds(Feed):
-    title = "Tutorials"
-    link = "/latesttutorials/"
-    description = "Recent free tutorials on LearnDjango.com."
+    title = "Moskas' Blog"
+    link = "http://localhost:8000/feed/"
+    description = "Random ramblings"
 
     def items(self):
         return Post.objects.order_by("-publish_date")[:100]
@@ -18,5 +18,5 @@ class RssTutorialsFeeds(Feed):
     def item_description(self, item):
         return item.body
 
-    def item_lastupdated(self, item):
+    def item_pubdate(self, item):
         return item.publish_date

@@ -31,6 +31,7 @@ class Query(graphene.ObjectType):
     post_by_slug = graphene.Field(PostType, slug=graphene.String())
     posts_by_author = graphene.List(PostType, username=graphene.String())
     posts_by_tag = graphene.List(PostType, tag=graphene.String())
+    posts_by_id = graphene.List(PostType, id=graphene.ID())
 
     def resolve_all_posts(root, info):
         return (
@@ -62,6 +63,9 @@ class Query(graphene.ObjectType):
             .select_related("author")
             .filter(tags__name__iexact=tag)
         )
+    
+    def resolve_posts_by_id(root, info, id):
+        return models.Post.objects.filter(id=id)
 
 
 schema = graphene.Schema(query=Query)
