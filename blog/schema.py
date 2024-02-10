@@ -25,10 +25,16 @@ class TagType(DjangoObjectType):
         model = models.Tag
 
 
+class ImageType(DjangoObjectType):
+    class Meta:
+        model = models.Image
+
+
 class Query(graphene.ObjectType):
     all_posts = graphene.List(PostType)
     all_tags = graphene.List(TagType)
     all_authors = graphene.List(AuthorType)
+    all_images = graphene.List(ImageType)
     latest_posts = graphene.List(PostType)
     author_by_username = graphene.Field(AuthorType, username=graphene.String())
     post_by_slug = graphene.Field(PostType, slug=graphene.String())
@@ -37,7 +43,9 @@ class Query(graphene.ObjectType):
     posts_by_id = graphene.List(PostType, id=graphene.ID())
 
     def resolve_all_posts(root, info, order_by=None):
-        return models.Post.objects.prefetch_related("tags").select_related("author").all()
+        return (
+            models.Post.objects.prefetch_related("tags").select_related("author").all()
+        )
 
     def resolve_all_tags(root, info):
         return models.Tag.objects.all()
@@ -75,7 +83,14 @@ class Query(graphene.ObjectType):
         return models.Post.objects.filter(id=id)
 
     def resolve_latest_posts(root, info):
-        return models.Post.objects.prefetch_related("tags").select_related("author").order_by("-id")[:5]
+        return (
+            models.Post.objects.prefetch_related("tags")
+            .select_related("author")
+            .order_by("-id")[:5]
+        )
+
+    def resolve_all_images(root, info):
+        return models.Image.objects.all()
 
 
 schema = graphene.Schema(query=Query)

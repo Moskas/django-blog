@@ -22,6 +22,15 @@ class Tag(models.Model):
         return self.name
 
 
+class Image(models.Model):
+    name = models.CharField(max_length=50)
+    alt_text = models.CharField(max_length=100)
+    Main_Img = models.ImageField(upload_to="images/")
+
+    def __str__(self):
+        return self.name
+
+
 class Post(models.Model):
     class Meta:
         ordering = ["-publish_date"]

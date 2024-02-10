@@ -17,6 +17,7 @@
           python311Packages.djangorestframework
           python311Packages.graphene-django
           python311Packages.django-cors-headers
+          python311Packages.pillow
         ];
       };
     };

@@ -17,11 +17,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from django.conf import settings
+from django.conf.urls.static import static
+
 from django.views.decorators.csrf import csrf_exempt
 from graphene_django.views import GraphQLView
 
 from blog.feeds import RssTutorialsFeeds
-from blog.views import TutorialListView, TutorialDetailView
+from blog.views import TutorialListView, TutorialDetailView, upload_image, image_view
 
 urlpatterns = [
     path("admin", admin.site.urls),
@@ -29,4 +32,9 @@ urlpatterns = [
     path("feed", RssTutorialsFeeds(), name="tutorial_feed"),
     path("<slug:slug>", TutorialDetailView.as_view(), name="tutorial_detail"),
     path("", TutorialListView.as_view(), name="tutorial_list"),
+    path("upload/", upload_image, name="upload_image"),
+    path("images/<str:image_name>", image_view, name="image_view"),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

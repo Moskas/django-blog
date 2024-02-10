@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from blog.models import Profile, Post, Tag
+from blog.models import Profile, Post, Tag, Image
 
 
 @admin.register(Profile)
@@ -50,3 +50,10 @@ class PostAdmin(admin.ModelAdmin):
     }
     date_hierarchy = "publish_date"
     save_on_top = True
+
+
+@admin.register(Image)
+class ImageAdmin(admin.ModelAdmin):
+    model = Image
+
+    list_display = ("id", "name", "Main_Img")

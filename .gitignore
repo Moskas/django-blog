@@ -3,3 +3,4 @@
 .direnv/
 venv/
 blog/migrations/*
+media/
